@@ -3,6 +3,7 @@ shader_type spatial;
 render_mode unshaded, depth_draw_opaque, cull_front;
 
 varying vec3 worldPos;
+varying vec3 objPos;
 
 float sdSphere(vec3 pos, float r) {
 	return length(pos) - r;
@@ -32,7 +33,7 @@ float getDist(vec3 inpos) {
 	//pos = mod(pos, 2.0);
 	//pos = pos;
 	
-	vec3 pos = inpos;
+	vec3 pos = inpos - objPos;
 	pos /= 5.0;
 	
 	for (int i = 0; i < FRACTAL_ITER; i++) {
@@ -123,6 +124,7 @@ raymarch rayMarch(vec3 ro, vec3 rd) {
 
 void vertex() {
 	worldPos = (MODEL_MATRIX * vec4(VERTEX,1)).xyz;
+	objPos = MODEL_MATRIX[3].xyz;
 //	vec4 adjustedPosition = MODEL_MATRIX * vec4(VERTEX,1);
 //	vec3 actualCamDir = vec3(VIEW_MATRIX[0].z,VIEW_MATRIX[1].z,VIEW_MATRIX[2].z);
 //	actualCamDir = normalize(actualCamDir);
