@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode unshaded, depth_draw_opaque;
+render_mode unshaded, depth_draw_opaque, cull_front;
 
 varying vec3 worldPos;
 
@@ -122,21 +122,22 @@ raymarch rayMarch(vec3 ro, vec3 rd) {
 }
 
 void vertex() {
-	vec4 adjustedPosition = MODEL_MATRIX * vec4(VERTEX,1);
-	vec3 actualCamDir = vec3(VIEW_MATRIX[0].z,VIEW_MATRIX[1].z,VIEW_MATRIX[2].z);
-	actualCamDir = normalize(actualCamDir);
-	float camForwardDist = dot((adjustedPosition.xyz - CAMERA_POSITION_WORLD), -actualCamDir);
-	
-	float nearPlane = PROJECTION_MATRIX[2].w / (PROJECTION_MATRIX[2].z - 1.0);
-	//COLOR = vec4(vec3(camForwardDist),1.0);
-	if (camForwardDist < nearPlane) {
-		//adjustedPosition.z += 2.0;
-		adjustedPosition.xyz += actualCamDir * (camForwardDist - nearPlane);
-	}
-	worldPos = adjustedPosition.xyz;
-	adjustedPosition = VIEW_MATRIX * adjustedPosition;
-	adjustedPosition = PROJECTION_MATRIX * adjustedPosition;
-	POSITION = adjustedPosition;
+	worldPos = (MODEL_MATRIX * vec4(VERTEX,1)).xyz;
+//	vec4 adjustedPosition = MODEL_MATRIX * vec4(VERTEX,1);
+//	vec3 actualCamDir = vec3(VIEW_MATRIX[0].z,VIEW_MATRIX[1].z,VIEW_MATRIX[2].z);
+//	actualCamDir = normalize(actualCamDir);
+//	float camForwardDist = dot((adjustedPosition.xyz - CAMERA_POSITION_WORLD), -actualCamDir);
+//
+//	float nearPlane = PROJECTION_MATRIX[2].w / (PROJECTION_MATRIX[2].z - 1.0);
+//	//COLOR = vec4(vec3(camForwardDist),1.0);
+//	if (camForwardDist < nearPlane) {
+//		//adjustedPosition.z += 2.0;
+//		adjustedPosition.xyz += actualCamDir * (camForwardDist - nearPlane);
+//	}
+//	worldPos = adjustedPosition.xyz;
+//	adjustedPosition = VIEW_MATRIX * adjustedPosition;
+//	adjustedPosition = PROJECTION_MATRIX * adjustedPosition;
+//	POSITION = adjustedPosition;
 }
 
 void fragment() {
