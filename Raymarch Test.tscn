@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://lutftpfk6kx4"]
+
+[ext_resource type="Shader" path="res://Test Raymarch.gdshader" id="1_022io"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p7my3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbkc6"]
+render_priority = 0
+shader = ExtResource("1_022io")
+
+[sub_resource type="SphereMesh" id="SphereMesh_oy5ul"]
+
+[node name="Node3d" type="Node3D"]
+
+[node name="MeshInstance3d" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_p7my3")
+surface_material_override/0 = SubResource("ShaderMaterial_xbkc6")
+
+[node name="MeshInstance3d2" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.67949, 0, 0, 0, 7.67949, 0, 0, 0, 7.67949, -2.91421, 2.78142, 3.11805)
+mesh = SubResource("SphereMesh_oy5ul")
